@@ -1,4 +1,11 @@
 
+/**
+ * Código para obtener la dirección del equipo.
+ *
+ * @author Sigifredo Escobar Gómez <sigifredo89@gmail.com>
+ * @version 2013-04-21
+ *
+ */
 
 #include <sys/socket.h>
 #include <sys/ioctl.h>
