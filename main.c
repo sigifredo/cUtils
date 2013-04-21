@@ -1,43 +1,5 @@
-/*
- * gethwaddr.c
- *
- * Demonstrates retrieving hardware address of adapter using ioctl()
- *
- * Author: Ben Menking <bmenking@highstream.net>
- *
- */
-/*
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <net/if.h>
 
-int main( int argc, char *argv[] )
-{
-    int s;
-    struct ifreq buffer;
 
-    s = socket(PF_INET, SOCK_DGRAM, 0);
-
-    memset(&buffer, '\0', sizeof(buffer));
-
-    strcpy(buffer.ifr_name, "eth0");
-
-    ioctl(s, SIOCGIFHWADDR, &buffer);
-
-    close(s);
-
-    for( s = 0; s < 6; s++ )
-    {
-        printf("%.2X ", (unsigned char)buffer.ifr_hwaddr.sa_data[s]);
-    }
-
-    printf("\n");
-
-    return 0;
-}
-*/
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include <linux/if.h>
@@ -45,26 +7,55 @@ int main( int argc, char *argv[] )
 #include <stdio.h>
 #include <string.h>
 
+#define ADD_SIZE	18
+#define INTERFACE_NAME	"eth0"
+
+/**
+ * \brief Obtenemos la dirección mac del equipo.
+ *
+ * @param szDir Dirección mac retornada. Es recomendable que el tamaño de este arreglo sea mínimo 18 caracteres.
+ *
+ * @return Si el proceso se completa de forma satisfactoria retorna 0, de lo contrario retorna -1.
+ *
+ */
+int obtenerDireccionMac(char * szDir);
+
 int main()
 {
-    char hwadd[12];
+    char hwaddr[ADD_SIZE];
+
+    if(obtenerDireccionMac(hwaddr) == 0)
+        printf("hwaddr: %s\n", hwaddr);
+    else
+        printf("No se ha podido encontrar la dirección MAC del equipo.\n");
+
+    return 0;
+}
+
+int obtenerDireccionMac(char * szDir)
+{
+    int ret = 0;
     struct ifreq s;
     int fd = socket(PF_INET, SOCK_DGRAM, IPPROTO_IP);
+    strcpy(s.ifr_name, INTERFACE_NAME);
 
-    strcpy(s.ifr_name, "eth0");
     if (0 == ioctl(fd, SIOCGIFHWADDR, &s))
     {
         int i;
+        char * cpDir = szDir;
 
-for (i = 0; i < 6; ++i)
-{
-printf(" %02x", (unsigned char) s.ifr_addr.sa_data[i]);
-}
-
-        puts("");
-
-        return 0;
+        for (i = 0; i < 6; ++i)
+        {
+            sprintf(cpDir, "%02x", s.ifr_addr.sa_data[i]);
+            cpDir[2] = ':';
+            cpDir += 3;
+        }
+        *(--cpDir) = '\0';
     }
+    else
+        ret = -1;
 
-    return 1;
+    close(fd);
+
+    return ret;
 }
