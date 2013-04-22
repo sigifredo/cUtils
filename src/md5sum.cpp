@@ -14,7 +14,6 @@ int main()
 
     byte digest[CryptoPP::Weak1::MD5::DIGESTSIZE];
     std::string message = "";
-
     hash.CalculateDigest(digest, (byte*) message.c_str(), message.length());
 
     std::string output;
