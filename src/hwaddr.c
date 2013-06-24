@@ -53,7 +53,8 @@ int obtenerDireccionMac(char * szDir)
 
         for (i = 0; i < 6; ++i)
         {
-            sprintf(cpDir, "%02x", s.ifr_addr.sa_data[i]);
+            int oct = s.ifr_addr.sa_data[i] & 0xff;
+            sprintf(cpDir, "%02x", oct);
             cpDir[2] = ':';
             cpDir += 3;
         }
