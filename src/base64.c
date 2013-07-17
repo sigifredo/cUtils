@@ -63,10 +63,9 @@ int main(int argc, char **argv)
 {
     if (argc < 2) return;
 
-    char str_in[] = "Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.";
     char * str_out = NULL;
 
-    base64(str_in, &str_out);
+    base64(argv[1], &str_out);
 
     printf("base64: %s\n", str_out);
 
