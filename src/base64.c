@@ -1,4 +1,12 @@
 
+/**
+ * Código para codificar una cadeba en base64. 
+ *
+ * @author Sigifredo Escobar Gómez <sigifredo89@gmail.com>
+ * @version 2013-07-17
+ *
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
