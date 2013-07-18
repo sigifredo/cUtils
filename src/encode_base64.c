@@ -15,7 +15,6 @@ void encode_base64(char * str_in, char **str_out)
 {
     int i, j, b;
     int len_i = strlen(str_in);
-    int len_o;
     char * str_b;
     char ind_b64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                      "abcdefghijklmnopqrstuvwxyz"

@@ -26,7 +26,7 @@ void usage(int exit_status, char *program_name) {
 int xkey_init (char *display_name) {
 
     if (display_name == NULL) display_name = XDisplayName (NULL);
-printf ("Display name: %s\n", display_name);
+    printf ("Display name: %s\n", display_name);
 
     if ( (display=XOpenDisplay(display_name)) == NULL ) {
         fprintf( stdout, "Cannot connect to X server\n");
