@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void base64(char * str_in, char **str_out)
+void encode_base64(char * str_in, char **str_out)
 {
     int i, j, b;
     int len_i = strlen(str_in);
@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 
     char * str_out = NULL;
 
-    base64(argv[1], &str_out);
+    encode_base64(argv[1], &str_out);
 
     printf("base64: %s\n", str_out);
 
